@@ -1,0 +1,19 @@
+{
+  "name": "zendesk_support_app_nuxt",
+  "version": "1.0.0",
+  "description": "My marvelous Nuxt.js project",
+  "author": "Xuan Pham",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "zat": "zat server -p zaf"
+  },
+  "dependencies": {
+    "nuxt": "^2.0.0",
+    "element-ui": "^2.4.11"
+  },
+  "devDependencies": {}
+}
