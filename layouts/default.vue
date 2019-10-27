@@ -3,11 +3,26 @@
     <nuxt />
   </div>
 </template>
-
+<script>
+import zaf from "~/common/zaf";
+import ls from "~/common/localStorage";
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters({
+      loading1: "appLoading"
+    })
+  }
+};
+</script>
 <style>
+.Loadingtop2p .el-loading-spinner {
+  top: 2%;
+  margin-top: 30px;
+}
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;

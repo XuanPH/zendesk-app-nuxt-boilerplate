@@ -30,11 +30,22 @@ export default {
   /*
    ** Global CSS
    */
-  css: ["element-ui/lib/theme-chalk/index.css", "assets/main.css"],
+  css: [
+    "element-ui/lib/theme-chalk/index.css",
+    "~/assets/css/main.css",
+    "~/assets/css/icons/icomoon/styles.css"
+  ],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["@/plugins/element-ui", "@/plugins/zaf.js", "@/plugins/methods.js"],
+  plugins: [
+    "~/plugins/axios",
+    "@/plugins/element-ui",
+    "@/plugins/filter.js",
+    { src: "~/plugins/moment" },
+    { src: "~/plugins/i18n" }
+  ],
+
   /*
    ** Nuxt.js dev-modules
    */
@@ -42,15 +53,32 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ["@nuxtjs/dotenv", "@nuxtjs/axios", "@nuxtjs/proxy"],
+  /*
+   ** Axios module configuration
+   */
+
+  // See https://github.com/nuxt-community/axios-module#options
+  axios: {
+    baseURL: "https://api.gtmjs.com/api/zendesk"
+  },
   /*
    ** Build configuration
    */
   build: {
     transpile: [/^element-ui/],
+    vendor: ["lodash"],
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: "pre",
+          test: /\.(js|vue)$/,
+          exclude: /(node_modules)/
+        });
+      }
+    }
   }
 };
