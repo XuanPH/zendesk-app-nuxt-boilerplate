@@ -1,77 +1,47 @@
 <template>
-  <div v-loading="loading">
-    {{modalRedirect ? 'Modal' :'Ticket'}}
-    <el-row class="center" :gutter="20" v-if="!modalRedirect">
-      <el-col :span="24">
-        <CustomerInfo />
-        <DigitalSourceInfo />
-        <WebAccessed />
-        <InteractionHistory />
-      </el-col>
-    </el-row>
-    <el-row class="center" :gutter="20" v-if="modalRedirect">
-      <el-col :span="24">
-        <Modal />
-      </el-col>
-    </el-row>
-  </div>
+  <div
+    :data-load="true"
+    v-loading="true"
+    class="Loadingtop2p"
+    element-loading-text="Fetching data..."
+  ></div>
 </template>
-
 <script>
-import Logo from "~/components/Logo.vue";
-import CustomerInfo from "~/components/CustomerInfo.vue";
-import DigitalSourceInfo from "~/components/DigitalSourceInfo.vue";
-import WebAccessed from "~/components/WebAccessed.vue";
-import InteractionHistory from "~/components/InteractionHistory.vue";
-import Modal from "~/components/modal/Modal.vue";
+import zaf from "~/common/zaf";
+import ls from "~/common/localStorage";
+import { mapGetters } from "vuex";
 export default {
-  data() {
-    return {
-      loading: true
-    };
-  },
-  components: {
-    Logo,
-    CustomerInfo,
-    DigitalSourceInfo,
-    WebAccessed,
-    InteractionHistory
-  },
-  mounted() {
-    let self = this;
-    setTimeout(() => {
-      self.loading = false;
-      this.$store.dispatch("resizeClient", this.zafClient);
-    }, 3000);
-  },
-  computed: {
-    modalRedirect() {
-      return this.$store.getters.currentLocation;
-    }
-  },
-  beforeMount() {
-    var client = ZAFClient.init();
-    let self = this;
-    try {
-      client.on("app.registered", function(appData) {
-        //client.invoke("resize", { height: document.body.clientHeight + 50 });
-        self.appData = appData;
-        console.log("appData zaf ", appData);
-        localStorage.removeItem("token");
-        localStorage.removeItem("leadId");
-      });
-      this.zafClient = client;
-    } catch (error) {}
-    if (this.appData) {
-      this.$store.dispatch("setLocation", this.appData.context.location);
+  async mounted() {
+    let _self = this;
+    var data = await zaf.init(this.$store);
+    if (!data.code) {
+      let intervalSet = setInterval(() => {
+        let i = 0;
+        try {
+          _self.$store.dispatch("setZAFClient", data);
+          _self.$store.dispatch("setParams", data.appData);
+          clearInterval(intervalSet);
+          console.info("Zendesk app framework created");
+          let location = data.appData.context.location;
+          if (location === "ticket_sidebar" || location === "user_sidebar") {
+            this.$store.state.zafClient.on("data_modal_passing", modalData => {
+              if (modalData.type === "updateLead") {
+                this.$store.dispatch("leads/initLeads", {
+                  zendeskId: 389547012574,
+                  fullName: "Dzung Nguyen",
+                  email: "dzung.nguyen@quesera.sg",
+                  phone: ""
+                });
+              }
+            });
+            _self.$router.push("/ticket_sidebar");
+          }
+        } catch (err) {}
+      }, 100);
+    } else {
+      console.info("Created fails, it't may be created");
+      this.$router.push("/ticket_sidebar");
     }
   }
 };
 </script>
-
-<style scoped>
-.el-loading-spinner {
-  top: 0 !important;
-  margin-top: 0 !important;
-}
-</style>

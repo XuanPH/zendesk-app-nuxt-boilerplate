@@ -9,12 +9,21 @@
   "private": true,
   "location": {
     "support": {
-      "ticket_sidebar": "http://localhost:3000",
+      "ticket_sidebar": "http://localhost:3000/",
       "user_sidebar": "http://localhost:3000",
       "new_ticket_sidebar": "http://localhost:3000",
       "background": "http://localhost:3000"
     }
   },
+  "parameters": [
+    {
+      "name": "O2O-Token",
+      "type": "text",
+      "required": false,
+      "secure": false,
+      "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJPMk8tQ1JNIiwiY29tcGFueUlkIjoiNWM2YmZjYmRjMGNkZTcwMDBmZTJhMGQzIiwidGltZSI6MTU2NTg2NTc4NX0.j3X8uxLbatZLINFfHPJ4PWAOTO3fN7d-sxrDFXxai2I"
+    }
+  ],
   "version": "1.0",
   "frameworkVersion": "2.0"
 }

@@ -78,9 +78,18 @@
 .text-left {
   text-align: left;
 }
+.text-center {
+  text-align: center;
+}
 .el-tag {
   margin: 5px 5px;
 }
 .margin-bottom-0 {
   margin-bottom: 0px;
+}
+.el-card__body > div {
+  padding: 20px;
+}
+.el-card__body {
+  padding: 0 !important;
 }
