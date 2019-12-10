@@ -1,8 +1,8 @@
-# zendesk_support_app_nuxt
+# ZAF With Nuxt
 
-> My marvelous Nuxt.js project
+> My marvelous Nuxt.js project with ZAF framework
 
-## Build Setup
+## Run server
 
 ``` bash
 # install dependencies
@@ -10,13 +10,9 @@ $ npm run install
 
 # serve with hot reload at localhost:3000
 $ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
 ```
+## Run Zaf App
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+$ cd zaf/
+$ zaf server
+
