@@ -12,7 +12,8 @@ $ npm run install
 $ npm run dev
 ```
 ## Run Zaf App
-
+``` bash
 $ cd zaf/
 $ zaf server
+```
 
